@@ -1,9 +1,20 @@
 public class ProdutosDTO {
     private Integer id;
     private String nome;
-    private Integer valor;
+    private Double valor;
     private String status;
+    
+     public ProdutosDTO() {}
 
+    // Construtor parametrizado
+    public ProdutosDTO(Integer id, String nome, Double valor, String status) {
+        this.id = id;
+        this.nome = nome;
+        this.valor = valor;
+        this.status = status;
+    }
+
+    //getters
     public Integer getId() {
         return id;
     }
@@ -12,7 +23,7 @@ public class ProdutosDTO {
         return nome;
     }
 
-    public Integer getValor() {
+    public Double getValor() {
         return valor;
     }
 
@@ -20,6 +31,7 @@ public class ProdutosDTO {
         return status;
     }
 
+    //setters
     public void setId(Integer id) {
         this.id = id;
     }
@@ -28,7 +40,7 @@ public class ProdutosDTO {
         this.nome = nome;
     }
 
-    public void setValor(Integer valor) {
+    public void setValor(Double valor) {
         this.valor = valor;
     }
 
