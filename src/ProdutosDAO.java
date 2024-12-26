@@ -30,12 +30,41 @@ public class ProdutosDAO {
             }finally {
                 try {
                     conn.close();
-                } catch (SQLException e) {
-                    JOptionPane.showMessageDialog(null, "Erro ao fechar a conexão: " + e.getMessage());
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Erro ao fechar a conexão: " + ex.getMessage());
                 }
             }
         }else{
             JOptionPane.showMessageDialog(null, "Falha ao conectar ao banco de dados");
+        }
+    }
+    
+    public int atualizar(ProdutosDTO produto){
+        conn = new conectaDAO().connectDB();
+        
+        if (conn != null){
+            sql= "UPDATE Itens SET status = ? WHERE Id = ?";
+            try(PreparedStatement stmt = conn.prepareStatement(sql)){
+                stmt.setString(1,"Vendido");
+                stmt.setInt(2, produto.getId());
+                
+                stmt.executeUpdate();          
+                JOptionPane.showMessageDialog(null, "Venda feita com sucesso!");
+                return 1;
+            }catch(SQLException ex){
+                JOptionPane.showMessageDialog(null, "Falha ao vender o produto" + ex.getMessage()); //ex.getMessage() Utiliza a mensagem de erro padrão do SQL
+                return 0;
+            }finally {
+                try {
+                    conn.close();
+                    return 1;
+                    }catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Erro ao fechar a conexão: " + ex.getMessage());
+                } 
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Falha ao conectar ao banco de dados");
+            return 0;
         }
     }
     
@@ -65,9 +94,13 @@ public class ProdutosDAO {
         
         return listagem;
     }
+        public void desconectar (){
+        try{
+            conn.close();
+        } catch (SQLException ex){
+            //Pode-se deixar vazio para evitar uma mensagem de erro desnecessária ao usuário
+        }
+    }
     
-    
-    
-        
 }
 

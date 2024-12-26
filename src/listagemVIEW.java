@@ -1,6 +1,11 @@
 
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
 
 public class listagemVIEW extends javax.swing.JFrame {
 
@@ -127,12 +132,30 @@ public class listagemVIEW extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
-        String id = id_produto_venda.getText();
+    int id = Integer.parseInt(id_produto_venda.getText()); 
+    ProdutosDAO dao = new ProdutosDAO(); 
+    ProdutosDTO dto = new ProdutosDTO();
+    dao.listarProdutos();
+
         
-        ProdutosDAO produtosdao = new ProdutosDAO();
+        try {    
+            int resposta = dao.atualizar(dto);
+    dto.setId(Integer.parseInt(id_produto_venda.getText()));
+    resposta = dao.atualizar(dto);
+    if(resposta == 1){
+        JOptionPane.showMessageDialog(null, "Dados atualizados com sucesso");
         
-        //produtosdao.venderProduto(Integer.parseInt(id));
-        listarProdutos();
+//limpar os campos
+        id_produto_venda.setText("");
+    }else if (resposta == 1062){
+        JOptionPane.showMessageDialog(null,"Produto já foi cadastrado");
+    }else{
+        JOptionPane.showMessageDialog(null,"Erro ao tentar atualizar o produto");
+    }
+        }catch (NumberFormatException ex) {
+    JOptionPane.showMessageDialog(null, "Por favor, insira um ID válido.");
+}
+       
     }//GEN-LAST:event_btnVenderActionPerformed
 
     private void btnVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendasActionPerformed
