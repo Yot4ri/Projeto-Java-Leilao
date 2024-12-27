@@ -10,6 +10,7 @@ public class ProdutosDAO {
     
     Connection conn;
     ArrayList<ProdutosDTO> listagem = new ArrayList<>();
+    ArrayList<ProdutosDTO> vendido = new ArrayList<>();
     String sql = null;
     
     public void cadastrarProduto (ProdutosDTO produto){
@@ -94,6 +95,34 @@ public class ProdutosDAO {
         
         return listagem;
     }
+    
+        public ArrayList<ProdutosDTO> listarVendas(){
+        
+        conn = new conectaDAO().connectDB();
+        
+         if (conn != null) {
+        sql = "SELECT id, nome, preco, status FROM Itens WHERE Status = 'Vendido'";
+        try (Statement stmt = conn.createStatement(); 
+             java.sql.ResultSet rs = stmt.executeQuery(sql)) {
+            
+            while (rs.next()) {
+                ProdutosDTO produto = new ProdutosDTO();
+                produto.setId(rs.getInt("id"));
+                produto.setNome(rs.getString("nome"));
+                produto.setValor(rs.getDouble("preco"));
+                produto.setStatus(rs.getString("status"));
+                
+                vendido.add(produto);
+                }
+            }
+        catch (SQLException e){
+                JOptionPane.showMessageDialog(null, "Erro ao listar produtos;");
+                }
+        } 
+        
+        return vendido;
+    }
+        
         public void desconectar (){
         try{
             conn.close();

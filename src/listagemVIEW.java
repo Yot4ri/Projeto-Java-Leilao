@@ -143,7 +143,7 @@ public class listagemVIEW extends javax.swing.JFrame {
     dto.setId(Integer.parseInt(id_produto_venda.getText()));
     resposta = dao.atualizar(dto);
     if(resposta == 1){
-        JOptionPane.showMessageDialog(null, "Dados atualizados com sucesso");
+        ;
         
 //limpar os campos
         id_produto_venda.setText("");
@@ -155,12 +155,12 @@ public class listagemVIEW extends javax.swing.JFrame {
         }catch (NumberFormatException ex) {
     JOptionPane.showMessageDialog(null, "Por favor, insira um ID válido.");
 }
-       
+    listarProdutos();
     }//GEN-LAST:event_btnVenderActionPerformed
 
     private void btnVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendasActionPerformed
-        //vendasVIEW vendas = new vendasVIEW(); 
-        //vendas.setVisible(true);
+        VendasVIEW vendas = new VendasVIEW(); 
+        vendas.setVisible(true);
     }//GEN-LAST:event_btnVendasActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
